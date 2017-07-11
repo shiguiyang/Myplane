@@ -13,13 +13,13 @@ public class Myframe extends JFrame {
 
 	public Myframe() {
 		//设置标题
-		super("JFram设置背景图片(Cannel_2020)");
+		super("极速轰炸-第一章");
 		//设置大小
-		setSize(500, 400);
+		setSize(800, 800);
 		//设置位置
 		setLocation(200, 50);
 		//背景图片的路径。（相对路径或者绝对路径。本例图片放于"java项目名"的文件下）
-		String path = "background.png";
+		String path = "airbackground.jpg";
 		// 背景图片
 		ImageIcon background = new ImageIcon(path);
 		// 把背景图片显示在一个标签里面
@@ -37,7 +37,5 @@ public class Myframe extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
-	public static void main(String[] args) {
-		new Myframe();
-	}
+	
 }
