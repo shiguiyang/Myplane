@@ -1,0 +1,14 @@
+package org.screen;
+
+
+public class main extends Myframe
+{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public static main(String[] args) {
+	   new Myframe();
+}
+}

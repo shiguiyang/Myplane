@@ -1,41 +1,62 @@
 package org.screen;
 
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-public class Myframe extends JFrame {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+import java.awt.Frame;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
-	public Myframe() {
-		//设置标题
-		super("极速轰炸-第一章");
-		//设置大小
-		setSize(800, 800);
-		//设置位置
-		setLocation(200, 50);
-		//背景图片的路径。（相对路径或者绝对路径。本例图片放于"java项目名"的文件下）
-		String path = "airbackground.jpg";
-		// 背景图片
-		ImageIcon background = new ImageIcon(path);
-		// 把背景图片显示在一个标签里面
-		JLabel label = new JLabel(background);
-		// 把标签的大小位置设置为图片刚好填充整个面板
-		label.setBounds(0, 0, this.getWidth(), this.getHeight());
-		// 把内容窗格转化为JPanel，否则不能用方法setOpaque()来使内容窗格透明
-		JPanel imagePanel = (JPanel) this.getContentPane();
-		imagePanel.setOpaque(false);
-		// 把背景图片添加到分层窗格的最底层作为背景
-		this.getLayeredPane().add(label, new Integer(Integer.MIN_VALUE));
-		//设置可见
-		setVisible(true);
-		//点关闭按钮时退出
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	}
 
+public class Myframe extends Frame {
 	
+	
+        //加载窗口
+        public void launchFrame() {
+            setSize(Constant.GAME_WIDTH, Constant.GAME_HEIGHT);       //设置窗口大小
+            setLocation(100, 100);   //设置左上角坐标，开始位置, 也就是窗口开始位置
+            setVisible(true);        //设置为可见(默认为不可见)
+            
+            //启动重画线程
+            new PaintThread().start();
+            
+            //匿名内部类---用来关闭窗口
+            addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    System.exit(0);
+                }
+            });
+            
+        }
+        
+        //双缓冲技术解决屏幕闪烁
+        private Image offScreenImage = null;   //利用双缓冲技术消除闪烁
+        public void update(Graphics g) {
+            if (offScreenImage == null)
+                offScreenImage = this.createImage(Constant.GAME_WIDTH, Constant.GAME_HEIGHT);
+            
+            Graphics gOff = offScreenImage.getGraphics();
+            
+            paint(gOff);
+            g.drawImage(offScreenImage, 0, 0, null);
+        }
+        
+        /**
+         * 定义一个重画窗口的线程类
+         * 是一个内部类(方便访问外部类属性)
+         */
+        class PaintThread extends Thread {
+            public void run() {
+                while (true) {
+                    repaint();             //重画
+                    try {
+                        Thread.sleep(40);  //1s = 1000ms
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }  
+                }
+            }
+        }
+        
 }
