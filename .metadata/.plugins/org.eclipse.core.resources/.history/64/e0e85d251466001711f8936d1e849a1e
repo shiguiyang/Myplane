@@ -1,0 +1,16 @@
+package org.screen;
+
+public class StartWin extend Myframe {
+ Myframe start;
+ Myframe over;
+ int choice = 0;
+ /**
+  * 初始化显示界面
+  * 玩家的选择
+  */
+ public int show()
+ {
+	 Object start;
+	start.super(开始);
+ }
+}

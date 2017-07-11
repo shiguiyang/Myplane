@@ -1,0 +1,6 @@
+package org.screen;
+
+public class StartWin {
+ Myframw start;
+ Myframw over;
+}
